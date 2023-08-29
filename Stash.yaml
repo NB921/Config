@@ -6,3 +6,69 @@
 # 下载配置后,请手动添加机场订阅
 # 找到 {远程订阅} 部分，将MyProxy 部分的 url替换为自己的机场订阅链接  
 
+#混合端口
+mixed-port: 7890
+#允许局域网
+allow-lan: true
+#绑定地址
+bind-address: '*'
+#模式:rule（规则） / global（全局代理）/ direct（全局直连）
+ipv6: false
+#开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
+mode: Rule
+#日志级别（日志输出级别：分级如后silent / info / warning / error / debug级别越高日志输出量越大）
+log-level: info
+#外部控制器
+external-controller: 127.0.0.1:9090
+
+#DNS设置
+dns:
+  enable: true
+  ipv6: false
+  listen: 0.0.0.0:53
+  #DNS服务器
+  default-nameserver:
+    - 114.114.115.115
+    - 119.28.28.28
+    - 223.6.6.6
+    - system
+  #DoH服务器
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.dns.sb/dns-query
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  #列表中的域名将不会被解析为fake ip，这些域名相关的解析请求将会返回它们真实的IP地址
+  fake-ip-filter:
+    - '+.lan'
+    - localhost.ptlogin2.qq.com
+    - '*.battle.net'
+    - '*.blzstatic.cn'
+    - '*.battlenet.com'
+    - '*.battlenet.com.cn'
+    - 'lens.l.google.com'
+    - '+.srv.nintendo.net'
+    - '+.stun.playstation.net'
+    - '+.msftncsi.com'
+    - '+.xboxlive.com'
+    - 'msftconnecttest.com'
+    - 'xbox.*.*.microsoft.com'
+    - 'xbox.*.microsoft.com'         
+    - '+.msftconnecttest.com'
+    - '*.msftncsi.com'
+    - '*.msftconnecttest.com'
+    - '*.mcdn.bilivideo.cn' #本地代理
+proxies:
+
+#远程订阅
+proxy-providers:
+
+  MyProxy:
+    url: "https://sub.store/download/collection/MySub"
+    # 使用Clash类型订阅链接替换掉引号""内的链接使用。
+    # 或可使用通用订阅链接通过Sub-Store进行订阅转换(用于Stash)。
+    interval: 86400
+    health-check:
+      enable: true
+      interval: 300
+      url: http://www.apple.com/library/test/success.html
