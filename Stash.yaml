@@ -343,7 +343,6 @@ rules:
   - RULE-SET,Gitlab-rules,Proxy
   - RULE-SET,Twitter-rules,Twitter
   - RULE-SET,Speedtest-rules,Speedtest
-  - RULE-SET,PayPal-rules,PayPal
   - RULE-SET,TestFlight-rules,TestFlight
   - RULE-SET,Apple-rules,Apple
   - RULE-SET,Google-rules,Google
