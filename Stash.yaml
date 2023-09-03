@@ -93,7 +93,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443))      
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443))      
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
     include-all: true
 
@@ -103,7 +103,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443)) 
     url: "http://www.apple.com/library/test/success.html"
     interval: 300
     lazy: true
@@ -118,7 +118,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443))
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
   
   - name: TikTok
@@ -129,7 +129,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443)) 
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
   
   - name: BiliBili
@@ -150,7 +150,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443))
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
   
   - name: Twitter
@@ -161,7 +161,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443))
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
   
   - name: Speedtest
@@ -173,7 +173,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443)) 
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
   
   - name: TestFlight
@@ -185,7 +185,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443))
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TestFlight.png
   
   - name: Apple
@@ -197,7 +197,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443))
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
   
   - name: Google
@@ -208,7 +208,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443))
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png
   
   - name: Microsoft
@@ -220,7 +220,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|电信|80|443))
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
   
   - name: 中国大陆
