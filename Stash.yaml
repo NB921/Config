@@ -57,13 +57,15 @@ dns:
     - '+.msftconnecttest.com'
     - '*.msftncsi.com'
     - '*.msftconnecttest.com'
-    - '*.mcdn.bilivideo.cn' #本地代理
+    - '*.mcdn.bilivideo.cn'
+
+#本地代理
 proxies:
 
 #远程订阅
 proxy-providers:
 
-  MyProxy:
+  性价比:
     url: "https://sub.store/download/collection/MySub"
     # 使用Clash类型订阅链接替换掉引号""内的链接使用。
     # 或可使用通用订阅链接通过Sub-Store进行订阅转换(用于Stash)。
@@ -72,3 +74,285 @@ proxy-providers:
       enable: true
       interval: 300
       url: http://www.apple.com/library/test/success.html
+
+  国际机场:
+    url: "https://sub.store/download/collection/MySub2"
+    # 使用Clash类型订阅链接替换掉引号""内的链接使用。
+    # 或可使用通用订阅链接通过Sub-Store进行订阅转换(用于Stash)。
+    interval: 86400
+    health-check:
+      enable: true
+      interval: 300
+      url: http://www.apple.com/library/test/success.html
+
+#策略组
+proxy-groups:
+
+  - name: Proxy
+    type: select
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443))      
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
+    include-all: true
+
+  - name: 自动选择
+    type: url-test
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    url: "http://www.apple.com/library/test/success.html"
+    interval: 300
+    lazy: true
+    tolerance: 50
+    include-all: true
+
+  - name: YouTube
+    type: select
+    proxies:
+      - Proxy
+      - 自动选择
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+  
+  - name: TikTok
+    type: select
+    proxies:
+      - Proxy
+      - 自动选择
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+  
+  - name: BiliBili
+    type: select
+    proxies:
+      - DIRECT
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(香港|HK|台湾|TW)) 
+    icon: https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Bilibili.png
+  
+  - name: Telegram
+    type: select
+    proxies:
+      - Proxy
+      - 自动选择
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+  
+  - name: Twitter
+    type: select
+    proxies:
+      - Proxy
+      - 自动选择
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
+  
+  - name: Speedtest
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+      - 自动选择
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
+  
+  - name: TestFlight
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+      - 自动选择
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TestFlight.png
+  
+  - name: Apple
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+      - 自动选择
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
+  
+  - name: Google
+    type: select
+    proxies:
+      - Proxy
+      - 自动选择
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png
+  
+  - name: Microsoft
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+      - 自动选择
+    use:
+      - 性价比
+      - 国际机场
+    filter: ^(?!.*(工单|官网|流量|联通|校园|电信|80|443)) 
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+  
+  - name: 中国大陆
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+      - 自动选择
+      - 漏网之鱼
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Heart.png
+  
+  - name: 漏网之鱼
+    type: select
+    proxies:
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Pig.png
+
+#远程规则集合
+rule-providers:
+
+  YouTube-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube_No_Resolve.yaml
+
+  TikTok-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok_No_Resolve.yaml
+
+  BiliBili-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili_No_Resolve.yaml
+
+  Telegram-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram_No_Resolve.yaml
+
+  GitHub-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml
+
+  Gitlab-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitLab/GitLab_No_Resolve.yaml
+
+  Twitter-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter_No_Resolve.yaml
+
+  Speedtest-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest_No_Resolve.yaml
+
+  TestFlight-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TestFlight/TestFlight.yaml
+
+  Apple-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple_Classical_No_Resolve.yaml
+
+  Google-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google_No_Resolve.yaml
+
+  Microsoft-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft_No_Resolve.yaml
+
+    Mainland-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_No_Resolve.yaml
+
+  MainlandIP-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaIPs/ChinaIPs_Classical_No_Resolve.yaml
+
+  Global-rules:
+    behavior: classical
+    interval: 86400
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Classical_No_Resolve.yaml
+
+#分流规则引用
+rules:
+  - SCRIPT,quic,REJECT
+  - RULE-SET,YouTube-rules,YouTube
+  - RULE-SET,TikTok-rules,TikTok
+  - RULE-SET,BiliBili-rules,BiliBili
+  - RULE-SET,Telegram-rules,Telegram
+  - RULE-SET,GitHub-rules,Proxy
+  - RULE-SET,Gitlab-rules,Proxy
+  - RULE-SET,Twitter-rules,Twitter
+  - RULE-SET,Speedtest-rules,Speedtest
+  - RULE-SET,PayPal-rules,PayPal
+  - RULE-SET,TestFlight-rules,TestFlight
+  - RULE-SET,Apple-rules,Apple
+  - RULE-SET,Google-rules,Google
+  - RULE-SET,Microsoft-rules,Microsoft
+  - RULE-SET,Global-rules,Proxy
+  - RULE-SET,Mainland-rules,中国大陆
+  - RULE-SET,MainlandIP-rules,中国大陆
+  - GEOIP,CN,DIRECT
+  - MATCH,漏网之鱼
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443
