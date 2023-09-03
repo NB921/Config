@@ -90,6 +90,8 @@ proxy-groups:
 
   - name: Proxy
     type: select
+    proxies:
+      - 自动选择
     use:
       - 性价比
       - 国际机场
