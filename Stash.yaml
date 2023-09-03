@@ -141,7 +141,7 @@ proxy-groups:
     use:
       - 性价比
       - 国际机场
-    filter: ^(?!.*(香港|HK|台湾|TW)) 
+    filter: (香港|HK|台湾|TW)
     icon: https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Bilibili.png
   
   - name: Telegram
