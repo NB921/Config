@@ -115,8 +115,7 @@ proxy-groups:
       - 自动选择
     include-all: true #引用所有节点 
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
-    include-all: true
-
+    
   - name: 自动选择
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
@@ -125,7 +124,6 @@ proxy-groups:
     interval: 300
     lazy: true
     tolerance: 50
-    include-all: true
 
   - name: YouTube
     <<: *h  
