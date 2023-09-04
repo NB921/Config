@@ -151,17 +151,14 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
   
   - name: Speedtest
-    type: select
     <<: *j  
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
   
   - name: TestFlight
-    type: select
     <<: *j    
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TestFlight.png
   
   - name: Apple
-    type: select
     <<: *j    
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
   
@@ -170,7 +167,6 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png
   
   - name: Microsoft
-    type: select
     <<: *j     
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
   
