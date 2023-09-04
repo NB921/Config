@@ -89,6 +89,7 @@ j: &j
 
  # 规则行为相关
  c: &c
+   type: http
    behavior: classical
    interval: 86400
    format: yaml
