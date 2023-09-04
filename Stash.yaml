@@ -71,8 +71,7 @@ c: &c
 
 # 代理组相关
 g: &g
-  include-all: true #引用所有节点
-  filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|重置|电信|80|443))  
+  include-all: true #引用所有节点  
 
 h: &h
   type: select
@@ -80,7 +79,6 @@ h: &h
     - Proxy
     - 自动选择
   include-all: true 
-  filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|重置|电信|80|443))   
 
 j: &j
   type: select
@@ -89,7 +87,6 @@ j: &j
     - Proxy
     - 自动选择
   include-all: true 
-  filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|重置|电信|80|443)) 
 
  # 规则行为相关
  c: &c
@@ -106,10 +103,12 @@ proxy-providers:
   性价比:
     url: "https://sub.store/download/collection/MySub"
     <<: *c
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|重置|电信|80|443))
     
   国际机场:
     url: "https://sub.store/download/collection/MySub2"
     <<: *c
+    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|重置|电信|80|443))
 
 #策略组
 proxy-groups:
