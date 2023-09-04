@@ -68,6 +68,7 @@ c: &c
     enable: true
     interval: 300
     url: http://www.apple.com/library/test/success.html
+  filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|重置|电信|80|443))
 
 # 代理组相关
 h: &h
@@ -100,13 +101,11 @@ proxy-providers:
   性价比:
     url: "https://sub.store/download/collection/MySub"
     <<: *c
-    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|重置|电信|80|443))
-    
+   
   国际机场:
     url: "https://sub.store/download/collection/MySub2"
     <<: *c
-    filter: ^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|重置|电信|80|443))
-
+   
 #策略组
 proxy-groups:
 
