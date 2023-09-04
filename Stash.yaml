@@ -62,7 +62,7 @@ dns:
 ###锚点###
 
 # 远程订阅相关
-c: &c
+d: &d
   type: http
   interval: 86400
   health-check:
@@ -101,11 +101,11 @@ proxy-providers:
 
   性价比:
     url: "https://sub.store/download/collection/MySub"
-    <<: *c
+    <<: *d
    
   国际机场:
     url: "https://sub.store/download/collection/MySub2"
-    <<: *c
+    <<: *d
    
 #策略组
 proxy-groups:
