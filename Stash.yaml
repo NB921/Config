@@ -63,6 +63,7 @@ dns:
 
 # 远程订阅相关
 c: &c
+  type: http
   interval: 86400
   health-check:
     enable: true
