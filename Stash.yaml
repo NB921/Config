@@ -1,273 +1,247 @@
-# MengRain & Coldvvater Config (Stash)修改自用
-# Date:2022.10.5
-# 最后一次更新于：2023.08.11
-# Author: MengRain、Coldvvater
-#（我的TG频道：https://t.me/mengyulianmian  可从频道进群交流）
-# 下载配置后,请手动添加机场订阅
-# 找到 {远程订阅} 部分，将MyProxy 部分的 url替换为自己的机场订阅链接  
+# Stash/Clash/Premium/Meta Config Make by Coldvvater
+# TG Channel: https://t.me/Coldvvater_Channel
+# GitHub: https://github.com/Coldvvater
+# Update Date: 2023.08.09
 
-#混合端口
-mixed-port: 7890
-#允许局域网
-allow-lan: true
-#绑定地址
-bind-address: '*'
-#模式:rule（规则） / global（全局代理）/ direct（全局直连）
-ipv6: false
-#开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
-mode: Rule
-#日志级别（日志输出级别：分级如后silent / info / warning / error / debug级别越高日志输出量越大）
-log-level: info
-#外部控制器
-external-controller: 127.0.0.1:9090
+# 自选GEOIP数据库推荐使用: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb
 
-#DNS设置
+mixed-port: 7890      # 混合端口，HTTP和SOCKS5用一个端口
+allow-lan: true       # 允许局域网的连接（共享代理）
+bind-address: "*"     # 监听IP白名单，可绑定单个IPv4和v6地址，"*" 为绑定所有IP地址，仅在将allow-lan设置为true时适用
+                      
+
+ipv6: true            # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
+mode: rule            # 规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
+log-level: info       # 设置日志输出级别 (5 个级别：silent / error / warning / info / debug）
+
+external-controller: 127.0.0.1:9090   # 外部控制器监听地址，可以使用 RESTful API 来控制你的 clash 内核
+
 dns:
-  enable: true
-  ipv6: false
-  listen: 0.0.0.0:53
-  #DNS服务器
-  default-nameserver:
-    - 114.114.115.115
-    - 119.28.28.28
-    - 223.6.6.6
-    - system
-  #DoH服务器
-  nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.dns.sb/dns-query
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  #列表中的域名将不会被解析为fake ip，这些域名相关的解析请求将会返回它们真实的IP地址
-  fake-ip-filter:
-    - '+.lan'
-    - localhost.ptlogin2.qq.com
-    - '*.battle.net'
-    - '*.blzstatic.cn'
-    - '*.battlenet.com'
-    - '*.battlenet.com.cn'
-    - 'lens.l.google.com'
-    - '+.srv.nintendo.net'
-    - '+.stun.playstation.net'
-    - '+.msftncsi.com'
-    - '+.xboxlive.com'
-    - 'msftconnecttest.com'
-    - 'xbox.*.*.microsoft.com'
-    - 'xbox.*.microsoft.com'         
-    - '+.msftconnecttest.com'
-    - '*.msftncsi.com'
-    - '*.msftconnecttest.com'
-    - '*.mcdn.bilivideo.cn'
+  enable: true             # 关闭将使用系统 DNS
+  ipv6: true               # IPV6解析开关；如果为false，将返回ipv6结果为空
+  enhanced-mode: fake-ip   # 模式：redir-host或fake-ip
+  listen: 0.0.0.0:53       # DNS 监听地址
+  default-nameserver: [223.5.5.5, 119.29.29.29, 114.114.114.114]
+                                  # 解析非IP的dns用的dns服务器，只支持纯IP，（Meta可为其加密）
+  nameserver: [https://223.5.5.5/dns-query, https://1.12.12.12/dns-query]
+                                  # 默认DNS服务器，支持udp/tcp/dot/doh/doq
+
+  fake-ip-range: 198.18.0.1/16    # Fake-IP 解析地址池
+  fake-ip-filter: ['+.lan', 'localhost.ptlogin2.qq.com', '*.battle.net', '*.blzstatic.cn', '*.battlenet.com', '*.battlenet.com.cn', 'lens.l.google.com', '+.srv.nintendo.net', '+.stun.playstation.net', '+.msftncsi.com', '+.xboxlive.com', 'msftconnecttest.com', 'xbox.*.*.microsoft.com', 'xbox.*.microsoft.com', '+.msftconnecttest.com', '*.msftncsi.com', '*.msftconnecttest.com', '*.mcdn.bilivideo.cn']
+                                  # Fake-ip 过滤，列表中的域名返回真实IP
 
 ###锚点###
 
+# 规则行为相关
+c: &c {type: http, behavior: classical, interval: 86400}
+
+d: &d {type: http, behavior: domain, interval: 86400}
 # 远程订阅相关
-d: &d
-  type: http
-  interval: 86400
-  health-check:
-    enable: true
-    interval: 300
-    url: http://www.apple.com/library/test/success.html
-  
+p: &p {type: http, interval: 42300, health-check: {enable: true, url: http://www.apple.com/library/test/success.html, interval: 300}}
+
 # 代理组相关
-h: &h
-  type: select
-  proxies:
-    - Proxy
-    - 自动选择
-  include-all: true 
+g: &g {type: select, proxies: [Proxy, Auto, Fallback, HongKong, TaiWan, Singapore, Japan, America, Others, DIRECT], include-all: true}
 
-j: &j
-  type: select
-  proxies:
-    - DIRECT
-    - Proxy
-    - 自动选择
-  include-all: true 
+m: &m {type: select, proxies: [DIRECT, Proxy, Auto, Fallback, HongKong, TaiWan, Singapore, Japan, America, Others], include-all: true}
 
- # 规则行为相关
- c: &c
-   type: http
-   behavior: classical
-   interval: 86400
-   format: yaml
+proxies:   # 本地服务器
 
-#本地代理
-proxies:
+# 订阅引用相关
+u: &u {type: select, use: [Subscribe]}
+
+proxy-providers: # 远程订阅
+  性价比: {<<: *p, path: ./proxy_providers/subscribe.yaml, url: ""}
   
-#远程订阅
-proxy-providers:
+  国际机场: {<<: *p, path: ./proxy_providers/subscribe2.yaml, url: ""}
+# 1. 请使用Clash类型订阅链接填入引号""内使用,
+# 2. 或可使用通用订阅链接通过Sub-Store进行订阅转换(用于Stash)。
 
-  性价比:
-    url: "https://sub.store/download/collection/MySub"
-    <<: *d
-   
-  国际机场:
-    url: "https://sub.store/download/collection/MySub2"
-    <<: *d
-   
-#策略组
-proxy-groups:
+proxy-groups:    # 代理组
 
-  - name: Proxy
-    type: select
-    proxies:
-      - 自动选择
-    include-all: true #引用所有节点 
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
-    
-  - name: 自动选择
-    type: url-test
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
-    include-all: true 
-    url: "http://www.apple.com/library/test/success.html"
-    interval: 300
-    lazy: true
-    tolerance: 50
+# 漏网之鱼
+ - {name: Final, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Final.png, <<: *g, proxies: [Proxy,DIRECT]}
 
-  - name: YouTube
-    <<: *h  
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
-  
-  - name: TikTok
-    <<: *h 
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
-  
-  - name: BiliBili
-    type: select
-    proxies:
-      - DIRECT
-    include-all: true 
-    filter: (香港|HK|台湾|TW)
-    icon: https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Bilibili.png
-  
-  - name: Telegram
-    <<: *h   
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
-  
-  - name: Twitter
-    <<: *h   
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
-  
-  - name: Speedtest
-    <<: *j  
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
-  
-  - name: TestFlight
-    <<: *j    
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TestFlight.png
-  
-  - name: Apple
-    <<: *j    
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
-  
-  - name: Google
-    <<: *h    
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png
-  
-  - name: Microsoft
-    <<: *j     
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
-  
-  - name: 中国大陆
-    type: select
-    proxies:
-      - DIRECT
-      - Proxy
-      - 自动选择
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Heart.png
-  
-  - name: 漏网之鱼
-    type: select
-    proxies:
-      - Proxy
-      - DIRECT
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Pig.png
+# 节点切换
+ - {name: Proxy, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Rocket.png, <<: *g, proxies: [Auto,Fallback,HongKong,TaiWan,Singapore,Japan,America,Others]}
 
-#远程规则集合
-rule-providers:
+# 自动选择
+ - {name: Auto, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Auto.png, type: url-test, lazy: true, <<: *u}
 
-  YouTube-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube_No_Resolve.yaml
+# 故障转移
+ - {name: Fallback, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Available.png, type: fallback, <<: *u}
 
-  TikTok-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok_No_Resolve.yaml
+# 国外网站
+ - {name: Global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Global.png, <<: *g}
 
-  BiliBili-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili_No_Resolve.yaml
+# 国内网站
+ - {name: Mainland, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/China_Map.png, <<: *m}
 
-  Telegram-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram_No_Resolve.yaml
+# YouTube
+ - {name: YouTube, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/YouTube.png, <<: *g}
 
-  GitHub-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml
+# NETFLIX
+ - {name: NETFLIX, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Netflix.png, <<: *g}
 
-  Gitlab-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitLab/GitLab_No_Resolve.yaml
+# Disney+
+ - {name: Disney+, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Disney%2B.png, <<: *g}
 
-  Twitter-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter_No_Resolve.yaml
+# Emby
+ - {name: Emby, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Emby.png, <<: *g}
 
-  Speedtest-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest_No_Resolve.yaml
+# 哔哩哔哩
+ - {name: BiliBili, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/bilibili.png, <<: *m, proxies: [DIRECT,HongKong,TaiWan]}
 
-  TestFlight-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TestFlight/TestFlight.yaml
+# 声田音乐
+ - {name: Spotify, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Spotify.png, <<: *g}
 
-  Apple-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple_Classical_No_Resolve.yaml
+# 网易云音乐
+ - {name: NetEaseMusic, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Netease_Music.png, <<: *m, proxies: [DIRECT]}
 
-  Google-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google_No_Resolve.yaml
+# 海外抖音
+ - {name: TikTok, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/TikTok.png, <<: *g}
 
-  Microsoft-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft_No_Resolve.yaml
+# 国际媒体
+ - {name: Streaming, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Streaming.png, <<: *g}
 
-  Mainland-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_No_Resolve.yaml
+# 电报信息
+ - {name: Telegram, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Telegram_X.png, <<: *g}
 
-  MainlandIP-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaIPs/ChinaIPs_Classical_No_Resolve.yaml
+# 苹果服务
+ - {name: Apple, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Apple.png, <<: *m}
 
-  Global-rules:
-    <<: *c
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Classical_No_Resolve.yaml
+# 谷歌服务
+ - {name: Google, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Google.png, <<: *g}
 
-#分流规则引用
-rules:
-  - SCRIPT,quic,REJECT
-  - RULE-SET,YouTube-rules,YouTube
-  - RULE-SET,TikTok-rules,TikTok
-  - RULE-SET,BiliBili-rules,BiliBili
-  - RULE-SET,Telegram-rules,Telegram
-  - RULE-SET,GitHub-rules,Proxy
-  - RULE-SET,Gitlab-rules,Proxy
-  - RULE-SET,Twitter-rules,Twitter
-  - RULE-SET,Speedtest-rules,Speedtest
-  - RULE-SET,TestFlight-rules,TestFlight
-  - RULE-SET,Apple-rules,Apple
-  - RULE-SET,Google-rules,Google
-  - RULE-SET,Microsoft-rules,Microsoft
-  - RULE-SET,Global-rules,Proxy
-  - RULE-SET,Mainland-rules,中国大陆
-  - RULE-SET,MainlandIP-rules,中国大陆
-  - GEOIP,CN,DIRECT
-  - MATCH,漏网之鱼
-script:
-  shortcuts:
-    quic: network == 'udp' and dst_port == 443
+# 微软服务
+ - {name: Microsoft, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Microsoft.png, <<: *m}
+
+# 游戏平台
+ - {name: Games, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Game.png, <<: *g}
+
+# 香港节点
+ - {name: HongKong, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Hong_Kong.png, <<: *u, filter: "港|🇭🇰|HK|(?i)Hong"}
+
+# 台湾节点
+ - {name: TaiWan, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/China.png, <<: *u, filter: "台|🇨🇳|🇹🇼|湾|TW|(?i)Taiwan"}
+
+# 狮城节点
+ - {name: Singapore, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Singapore.png, <<: *u, filter: "新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore"}
+
+# 日本节点
+ - {name: Japan, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Japan.png, <<: *u, filter: "日|🇯🇵|东京|JP|(?i)Japan"}
+
+# 美国节点
+ - {name: America, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/United_States.png, <<: *u, filter: "美|🇺🇲|US|(?i)States|American"}
+
+# 其他节点
+ - {name: Others, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Airport.png, <<: *u, filter: "^((?!香港|HK|Hong Kong|台湾|TW|TaiWan|新加坡|SG|Singapore|狮城|日本|JP|Japan|美国|US|States|American|Music)).*$"}
+
+rule-providers: # 远程规则集
+
+# 隐私网络
+ Private: {<<: *d, path: ./ruleset/Private.yaml, url: https://rules.kr328.app/private.yaml}
+
+# HTTPDNS拦截
+ HTTPDNS: {<<: *d, path: ./ruleset/HTTPDNS.yaml, url: https://cdn.jsdelivr.net/gh/VirgilClyne/GetSomeFries@main/ruleset/HTTPDNS.Block.yaml}
+
+# OpenAI
+ OpenAI: {<<: *c, path: ./ruleset/OpenAI.yaml, url: https://cdn.jsdelivr.net/gh/Coldvvater/Mononoke@master/Stash/RuleSet/OpenAI.yaml}
+
+# 油管视频
+ YouTube: {<<: *d, path: ./ruleset/YouTube.yaml, url: https://rules.kr328.app/youtube.yaml}
+
+# 奈飞视频
+ Netflix: {<<: *d, path: ./ruleset/Netflix.yaml, url: https://rules.kr328.app/netflix.yaml}
+
+# 迪士尼+
+ Disney: {<<: *d, path: ./ruleset/Disney.yaml, url: https://rules.kr328.app/disney.yaml}
+
+# Emby
+ Emby: {<<: *c, path: ./ruleset/Emby.yaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Emby/Emby.yaml}
+
+# 动画疯
+ Bahamut: {<<: *d, path: ./ruleset/Bahamut.yaml, url: https://rules.kr328.app/bahamut.yaml}
+
+# 哔哩哔哩东南亚
+ BiliIntl: {<<: *d, path: ./ruleset/BiliIntl.yaml, url: https://rules.kr328.app/bilibili@%21cn.yaml}
+
+# 哔哩哔哩
+ BiliBili: {<<: *c, path: ./ruleset/BiliBili.yaml, url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/Bilibili.yaml}
+
+# 声田音乐
+ Spotify: {<<: *d, path: ./ruleset/Spotify.yaml, url: https://rules.kr328.app/spotify.yaml}
+
+# 网易云音乐
+ NetEaseMusic: {<<: *c, path: ./ruleset/NetEaseMusic.yaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/NetEaseMusic/NetEaseMusic_No_Resolve.yaml}
+
+# 海外抖音
+ TikTok: {<<: *c, path: ./ruleset/TikTok.yaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/TikTok/TikTok.yaml}
+
+# 国际媒体
+ GlobalMedia: {<<: *d, path: ./ruleset/GlobalMedia.yaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Domain.yaml}
+
+# 电报信息
+ Telegram: {<<: *c, path: ./ruleset/Telegram.yaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram_No_Resolve.yaml}
+
+# GitHub
+ GitHub: {<<: *d, path: ./ruleset/GitHub.yaml, url: https://rules.kr328.app/github.yaml}
+
+# 必应搜索
+ Bing: {<<: *d, path: ./ruleset/Bing.yaml, url: https://rules.kr328.app/bing.yaml}
+
+# Twitter
+ Twitter: {<<: *c, path: ./ruleset/Twitter.yaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter_No_Resolve.yaml}
+
+# TestFlight
+ TestFlight: {<<: *c, path: ./ruleset/TestFlight.yaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/TestFlight/TestFlight.yaml}
+
+# 苹果服务
+ Apple: {<<: *d, path: ./ruleset/Apple.yaml, url: https://rules.kr328.app/apple.yaml}
+
+# 谷歌服务
+ Google: {<<: *d, path: ./ruleset/Google.yaml, url: https://rules.kr328.app/google.yaml}
+
+# 微软服务
+ Microsoft: {<<: *d, path: ./ruleset/Microsoft.yaml, url: https://rules.kr328.app/microsoft.yaml}
+
+# 游戏平台
+ Games: {<<: *c, path: ./ruleset/Games.yaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game_No_Resolve.yaml}
+
+# 国内网站
+ China: {<<: *d, path: ./ruleset/China.yaml, url: https://rules.kr328.app/cn.yaml}
+
+# 国外网站
+ Proxy: {<<: *d, path: ./ruleset/Proxy.yaml, url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt}
+
+rules: # 分流规则引用
+  - DOMAIN,rules.kr328.app,Proxy
+  - RULE-SET,Private,DIRECT
+  - RULE-SET,HTTPDNS,REJECT
+  - RULE-SET,OpenAI,America
+  - RULE-SET,YouTube,YouTube
+  - RULE-SET,Netflix,NETFLIX
+  - RULE-SET,Disney,Disney+
+  - RULE-SET,Emby,Emby
+  - RULE-SET,Bahamut,TaiWan
+  - RULE-SET,BiliIntl,Streaming
+  - RULE-SET,BiliBili,BiliBili
+  - RULE-SET,Spotify,Spotify
+  - RULE-SET,NetEaseMusic,NetEaseMusic
+  - RULE-SET,TikTok,TikTok
+  - RULE-SET,GlobalMedia,Streaming
+  - RULE-SET,Telegram,Telegram
+  - RULE-SET,GitHub,Global
+  - RULE-SET,Bing,Global
+  - RULE-SET,Twitter,Global
+  - RULE-SET,TestFlight,Global
+  - RULE-SET,Apple,Apple
+  - RULE-SET,Google,Google
+  - RULE-SET,Microsoft,Microsoft
+  - RULE-SET,Games,Games
+  - RULE-SET,Proxy,Global
+  - GEOIP,google,Google
+  - GEOIP,netflix,NETFLIX
+  - RULE-SET,China,Mainland
+  - GEOIP,private,DIRECT
+  - GEOIP,CN,Mainland
+  - MATCH,Final
