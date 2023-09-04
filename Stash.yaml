@@ -70,9 +70,6 @@ c: &c
     url: http://www.apple.com/library/test/success.html
 
 # 代理组相关
-g: &g
-  include-all: true #引用所有节点  
-
 h: &h
   type: select
   proxies:
@@ -117,14 +114,14 @@ proxy-groups:
     type: select
     proxies:
       - 自动选择
-    <<: *g    
+    include-all: true #引用所有节点 
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
     include-all: true
 
   - name: 自动选择
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
-    <<: *g  
+    include-all: true 
     url: "http://www.apple.com/library/test/success.html"
     interval: 300
     lazy: true
