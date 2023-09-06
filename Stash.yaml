@@ -32,8 +32,8 @@ proxies: # 本地服务器
 # 订阅引用相关
 u: &u {type: select, include-all: true}
 proxy-providers: # 远程订阅
-  性价比: {!!merge <<: *p, path: ./proxy_providers/subscribe.yaml, url: "https://dingyue1.b-cdn.net/api/v1/client/subscribe?token=6540f5dcda633e83bdea78826308cc9b", benchmark-url: 'http://www.apple.com/library/test/success.html', filter: '^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|重置|电信|80|443))', interval: 42300}
-  国际机场: {!!merge <<: *p, path: ./proxy_providers/subscribe2.yaml, url: "http://nachoneko.cn/api/v1/client/subscribe?token=1533031f6a7c40cc7c3f3192ffde84ad", benchmark-url: 'http://www.apple.com/library/test/success.html', filter: '^(?!.*(工单|套餐|回国|国内|国际|官网|流量|联通|校园|重置|电信|80|443))', interval: 42300}
+  性价比: {!!merge <<: *p, path: ./proxy_providers/subscribe.yaml, url: "https://dingyue1.b-cdn.net/api/v1/client/subscribe?token=6540f5dcda633e83bdea78826308cc9b", benchmark-url: 'http://www.apple.com/library/test/success.html',      interval: 42300}
+  国际机场: {!!merge <<: *p, path: ./proxy_providers/subscribe2.yaml, url: "http://nachoneko.cn/api/v1/client/subscribe?token=1533031f6a7c40cc7c3f3192ffde84ad", benchmark-url: 'http://www.apple.com/library/test/success.html', interval: 42300}
 # 1. 请使用Clash类型订阅链接填入引号""内使用,
 # 2. 或可使用通用订阅链接通过Sub-Store进行订阅转换(用于Stash)。
 
