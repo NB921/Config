@@ -1,1 +1,20 @@
-{"name":"own", "description":"提取自图标包poppin自用", "icons":[{"name":"Abema","url":"https://raw.githubusercontent.com/NB921/picture/main/Abema.png"}]}
+{
+"name":"Own icon", 
+"description":"提取图标包poppin自用", 
+"icons":
+[
+	{"name":"Apple", "url":"https://raw.githubusercontent.com/NB921/picture/main/Apple.png"},  
+	{"name":"Bilibili", "url":"https://raw.githubusercontent.com/NB921/picture/main/Bilibili2.png"}, 
+	{"name":"Emby", "url":"https://raw.githubusercontent.com/NB921/picture/main/emby2.png"}, 
+	{"name":"Disney", "url":"https://raw.githubusercontent.com/NB921/picture/main/Disney.png"},
+	{"name":"Golbal", "url":"https://raw.githubusercontent.com/NB921/picture/main/Golbal.png"},
+	{"name":"Google", "url":"https://raw.githubusercontent.com/NB921/picture/main/Google2.png"},
+	{"name":"163Music", "url":"https://raw.githubusercontent.com/NB921/picture/main/Nete.png"},
+	{"name":"Iqiy", "url":"https://raw.githubusercontent.com/NB921/picture/main/Iqiy.png"},
+	{"name":"Netflix", "url":"https://raw.githubusercontent.com/NB921/picture/main/Netflix.png"},
+	{"name":"Spotify", "url":"https://raw.githubusercontent.com/NB921/picture/main/Spotify.png"},
+	{"name":"Telegram", "url":"https://raw.githubusercontent.com/NB921/picture/main/Telegram.png"},
+	{"name":"Twitter", "url":"https://raw.githubusercontent.com/NB921/picture/main/Twitter.png"},
+	{"name":"Youtube", "url":"https://raw.githubusercontent.com/NB921/picture/main/Youtube.png"}
+]
+}
