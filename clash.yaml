@@ -157,6 +157,7 @@ rules:
   - GEOSITE,category-ads-all,REJECT
   - GEOIP,lan,DIRECT,no-resolve
   - RULE-SET,video,DIRECT
+  - RULE-SET,china,DIRECT
   - RULE-SET,X,X
   - DOMAIN-SUFFIX,xn--ngstr-lra8j.com,全球代理
   - DOMAIN-SUFFIX,googleapis.cn,全球代理
