@@ -126,7 +126,11 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/NB921/picture/main/Youtube1.png
     interrupt-exist-connections: false
   - name: PandaTV
-    <<: *a2
+    type: select
+    proxies:
+      - DIRECT
+      - 全球代理
+    include-all: true
     icon: https://raw.githubusercontent.com/NB921/picture/main/panda2.png
     interrupt-exist-connections: false
   - name: 电报服务
