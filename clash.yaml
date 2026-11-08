@@ -142,6 +142,7 @@ proxy-groups:
     proxies:
       - 全球代理
     include-all: true
+    filter: ^(?!.*(香港|HK|hk|Hk))
     icon: https://raw.githubusercontent.com/NB921/picture/main/Tiktok3.png
   - name: X
     <<: *a2
